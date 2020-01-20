@@ -29,6 +29,10 @@ typedef void (*FloatVar)(float *f, char *name, char *usage);
 
 typedef void (*BoolVar)(bool *b, char *name, char *usage);
 
+typedef void (*SetTitle)(char *title);
+
+typedef void (*Help)();
+
 typedef void (*Parse)(char **argv);
 
 typedef struct flag {
@@ -37,6 +41,8 @@ typedef struct flag {
     LongVar longVar;
     FloatVar floatVar;
     BoolVar boolVar;
+    SetTitle setTitle;
+    Help help;
     Parse parse;
 } *Flag;
 

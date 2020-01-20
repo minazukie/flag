@@ -8,11 +8,13 @@
 private void error(char *err);
 
 private bool initialized = false;
+private char *title = "";
 
 private void var(void *value, char *name, char *usage, enum types type);
 
 private struct _flag {
     Flag f;
+    char *title;
     char **argv;
 } *_Flag;
 
@@ -121,6 +123,21 @@ private void defaultBoolVar(bool *b, char *name, char *usage) {
     var(b, name, usage, Bool);
 }
 
+private void defaultSetTitle(char *t) {
+    title = t;
+}
+
+private void defaultHelp() {
+    struct Map *fm;
+    if (title != "") {
+        printf("%s\n", title);
+    }
+    printf("Options:\n");
+    for (fm = flagMap; fm != NULL; fm = fm->hh.next) {
+        printf("-%s   %s\n", fm->key, fm->value->usage);
+    }
+}
+
 private void var(void *value, char *name, char *usage, enum types type) {
     struct FlagArgs *fa = malloc(sizeof(struct FlagArgs));
     fa->type = type;
@@ -142,12 +159,14 @@ public Flag newFlag() {
     ff->f = f;
     _Flag = ff;
 
-    f->parse = defaultParse;
     f->intVar = defaultIntVar;
     f->stringVar = defaultStringVar;
     f->longVar = defaultLongVar;
     f->floatVar = defaultFloatVar;
     f->boolVar = defaultBoolVar;
+    f->setTitle = defaultSetTitle;
+    f->help = defaultHelp;
+    f->parse = defaultParse;
 
     return f;
 }

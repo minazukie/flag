@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
     float height;
     long weight;
 
+    f->setTitle("\nFlag\n\nA simple command line interface.\n");
+
     f->stringVar(&name, "name", "my name");
     f->boolVar(&isLive, "live", "my state");
     f->intVar(&age, "age", "my age");
@@ -21,6 +23,8 @@ int main(int argc, char **argv) {
     f->longVar(&weight, "weight", "my weight");
 
     f->parse(argv);
+
+    f->help();
 
     printf("name:      %s\n", name);
     printf("age:       %d\n", age);
