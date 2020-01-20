@@ -1,3 +1,7 @@
 # Flag
 
-WORK IN PROCESS
+A simple command line interface.
+
+## Dependencies
+
+- uthash
